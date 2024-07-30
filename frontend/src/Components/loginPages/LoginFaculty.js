@@ -6,4 +6,4 @@ const LoginFaculty = () => {
   )
 }
 
-export default LoginFaculty
+export default LoginFaculty 
