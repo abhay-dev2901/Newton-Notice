@@ -26,13 +26,6 @@ const Home = () => {
 
       {/* Hero Section */}
       <div className="relative flex flex-col items-center justify-center flex-grow">
-        {/* <div className="fixed top-0 right-0 h-full w-1/2">
-          <img
-            src={bg}
-            alt="Background"
-            className="h-full w-full object-cover opacity-50"
-          />
-        </div> */}
         <div className="relative z-10 text-center max-w-3xl mx-auto p-8 bg-white rounded-lg shadow-md">
           <h1 className="text-4xl font-extrabold text-blue-600 mb-4">
             Newton School of Technology Notice Board
@@ -46,12 +39,6 @@ const Home = () => {
               className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition duration-200"
             >
               Log In as Admin
-            </button>
-            <button
-              onClick={() => navigate('/loginFaculty')}
-              className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition duration-200"
-            >
-              Log In as Faculty
             </button>
             <button
               onClick={() => navigate('/loginStudent')}
