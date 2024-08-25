@@ -2,7 +2,6 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import logo from "../Photos/logo.jpg";
-import bg from "../Photos/1646134230phpSqwzFt.jpeg";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -48,12 +47,23 @@ const Home = () => {
             </button>
           </div>
           <p className="text-blue-500 mb-2">Don't have an account?</p>
+          <div className="flex justify-center space-x-4 mb-6">
           <button
             onClick={() => navigate('/signup')}
             className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition duration-200"
           >
-            Sign Up
+            Sign Up Admin
           </button>
+
+          <button
+            onClick={() => navigate('/signup')}
+            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition duration-200"
+          >
+            Sign Up Student
+          </button>
+
+          </div>
+          
         </div>
       </div>
     </div>
