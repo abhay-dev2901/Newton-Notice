@@ -18,7 +18,6 @@ app.get('/', (req, res) => {
     res.send('Welcome to the College Notice Board!');
   });
 
-app.use('/admin', adminRoutes);
 app.use('/student' ,studentRoutes);
 app.use('/instructor', instructorRoutes);
 

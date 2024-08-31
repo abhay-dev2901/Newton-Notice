@@ -1,10 +1,10 @@
 
 const express = require('express');
-const { instructorAuth, instructorNotice } = require('../controllers/instructorController');
+const { instructorSignUp, InstructorSignIn } = require('../controllers/instructorController');
 const router = express.Router();
 
-router.post('/auth' , instructorAuth)
-router.get('/notices', instructorNotice)
+router.post('/signup' , instructorSignUp)
+router.post('/signin', InstructorSignIn)
 
 
 module.exports = router;
