@@ -6,6 +6,9 @@ import LoginFaculty from './Components/loginPages/LoginFaculty';
 import LoginStudent from './Components/loginPages/LoginStudent';
 import Signup from './Components/Signup';
 import UniqueId from './Components/UniqueId';
+import Sidebar from './Components/notices/sidebar';
+import Notices from './Components/notices/Notices';
+import { AllNotices } from './Components/AllNotices';
 
 function App() {
   return (
@@ -16,6 +19,7 @@ function App() {
         <Route path='/loginFaculty' element={<LoginFaculty></LoginFaculty>} />
         <Route path='/loginStudent' element={<LoginStudent></LoginStudent>} />
         <Route path='/SignUp' element={<Signup></Signup>} />
+        <Route path='/notices' element = {<AllNotices></AllNotices>} />
 
       </Routes>
       

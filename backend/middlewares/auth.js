@@ -11,7 +11,7 @@ const authenticateToken = (req,res,next) => {
           return res.status(403).json({ error: 'Invalid token' });
         }
     
-        req.user = user; // Attach the user info to the request object
+        req.user = user;
         next();
       });
     };

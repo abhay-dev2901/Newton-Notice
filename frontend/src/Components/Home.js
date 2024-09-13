@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import logo from "../Photos/logo.jpg";
+import logo from "../Photos/Newton x Rishihood.png";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -71,4 +71,3 @@ const Home = () => {
 };
 
 export default Home;
-
