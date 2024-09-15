@@ -1,54 +1,56 @@
 import React, { useState } from 'react';
-import { FaRegBookmark } from "react-icons/fa";
+import { FaRegBookmark, FaBookmark } from "react-icons/fa";
+import notices from './NoticesObject';
+import Sidebar from './sidebar';
+import { useNavigate } from 'react-router-dom';  // Import useNavigate
 
-
-
-const Notices = () => {
-    // State management for expanded notice, search term, and date filters
-    const [expandedNotice, setExpandedNotice] = useState(null);
+const Notices = ({ data }) => {
     const [searchTerm, setSearchTerm] = useState('');
     const [searchDate, setSearchDate] = useState('');
+    const [selectedCategory, setSelectedCategory] = useState('All Notices');
+    const [currentPage, setCurrentPage] = useState(1);
+    const [bookmarkedNotices, setBookmarkedNotices] = useState([]);
+    const itemsPerPage = 5;
 
-    // Sample data
-    const notices = [
-        {ind: 1, postBy:"Admin", subject: "PhD Viva Voce of Ms. Poonam S. Jaiswal",
-            Notice: "Cillum consequat cillum et do officia consectetur et sunt in nostrud aliquip commodo. Est esse voluptate reprehenderit velit excepteur et occaecat qui cupidatat aliquip fugiat minim. Sint culpa sit ex aute officia labore dolore. Officia cillum proident dolore duis."
-            , postOn: "2024-09-10" , time:"00:00 PM"},
-        {ind: 2, postBy:"Placement Office", subject: "Webstaff Co. Ltd: Submission of bio-data for pre-final year students",
-            Notice: "Cillum consequat cillum et do officia consectetur et sunt in nostrud aliquip commodo. Est esse voluptate reprehenderit velit excepteur et occaecat qui cupidatat aliquip fugiat minim. Sint culpa sit ex aute officia labore dolore. Officia cillum proident dolore duis."
-            , postOn: "2024-09-09" , time:"00:00 PM"},
-        {ind: 3, postBy:"Admin", subject: "Appointment of Faculty Coordinator for Cognizance 2019",
-            Notice: "Cillum consequat cillum et do officia consectetur et sunt in nostrud aliquip commodo. Est esse voluptate reprehenderit velit excepteur et occaecat qui cupidatat aliquip fugiat minim. Sint culpa sit ex aute officia labore dolore. Officia cillum proident dolore duis."
-            , postOn: "2024-09-08" , time:"00:00 PM"},
-        {ind: 4, postBy:"Dean Office", subject: "Sports Preliminary Coaching Camp",
-            Notice: "Cillum consequat cillum et do officia consectetur et sunt in nostrud aliquip commodo. Est esse voluptate reprehenderit velit excepteur et occaecat qui cupidatat aliquip fugiat minim. Sint culpa sit ex aute officia labore dolore. Officia cillum proident dolore duis."
-            , postOn: "2024-09-07" , time:"00:00 PM"},
-        {ind: 5, postBy:"Placement Office", subject: "Advaita 18 Update - Event Registration Invitation - Xccelerate, Pinnacle and Sphinxv",
-            Notice: "Cillum consequat cillum et do officia consectetur et sunt in nostrud aliquip commodo. Est esse voluptate reprehenderit velit excepteur et occaecat qui cupidatat aliquip fugiat minim. Sint culpa sit ex aute officia labore dolore. Officia cillum proident dolore duis."
-            , postOn: "2024-09-06" , time:"00:00 PM"},
-        {ind: 6, postBy:"Admin", subject: "KLA Tencor (Software Engineer): Submission of bio-data for pre-final year students",
-            Notice: "Cillum consequat cillum et do officia consectetur et sunt in nostrud aliquip commodo. Est esse voluptate reprehenderit velit excepteur et occaecat qui cupidatat aliquip fugiat minim. Sint culpa sit ex aute officia labore dolore. Officia cillum proident dolore duis."
-            , postOn: "2024-09-05" , time:"00:00 PM"},
-        {ind: 7, postBy:"OAA", subject: "Notification (74th Meeting of Senate): Admission of Sponsored candidate(s) for PG Diploma & M Tech programs",
-            Notice: "Cillum consequat cillum et do officia consectetur et sunt in nostrud aliquip commodo. Est esse voluptate reprehenderit velit excepteur et occaecat qui cupidatat aliquip fugiat minim. Sint culpa sit ex aute officia labore dolore. Officia cillum proident dolore duis."
-            , postOn: "2024-09-04" , time:"00:00 PM"},
-    ];
+    const navigate = useNavigate();  // Initialize the useNavigate hook
 
-    // Filter notices based on search and date range
+    const filteredCategory = selectedCategory === 'Bookmarks' ? 'bookmarked' : selectedCategory;
+
     const filteredNotices = notices.filter(notice => {
         const isSearchMatch = notice.subject.toLowerCase().includes(searchTerm.toLowerCase());
-        const isSeachDate = searchDate ? new Date(notice.postOn).toDateString() === new Date(searchDate).toDateString() : true;
+        const isCategoryMatch = filteredCategory === 'bookmarked' ? bookmarkedNotices.includes(notice.ind) : filteredCategory === 'All Notices' || notice.postBy === filteredCategory;
+        const isDateMatch = searchDate ? new Date(notice.postOn).toDateString() === new Date(searchDate).toDateString() : true;
 
-        return isSeachDate && isSearchMatch
+        return isSearchMatch && isCategoryMatch && isDateMatch;
     });
 
-    return (
-        <div className="flex flex-col items-center h-screen bg-gray-100 p-4">
-            <div className="w-full max-w-5xl bg-white shadow-lg rounded-lg p-6">
-                {/* Title */}
-                <div className="p-4 font-semibold text-lg mb-4">All Notices</div>
+    const totalPages = Math.ceil(filteredNotices.length / itemsPerPage);
+    const paginatedNotices = filteredNotices.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
-                {/* Search and Date Filter */}
+    const handlePageChange = (page) => {
+        if (page >= 1 && page <= totalPages) {
+            setCurrentPage(page);
+        }
+    };
+
+    const handleBookmarkToggle = (noticeId) => {
+        if (bookmarkedNotices.includes(noticeId)) {
+            setBookmarkedNotices(bookmarkedNotices.filter(id => id !== noticeId));
+        } else {
+            setBookmarkedNotices([...bookmarkedNotices, noticeId]);
+        }
+    };
+
+    const handleNoticeClick = (noticeId) => {
+        // Navigate to the ViewNotice component with the notice id in the URL
+        navigate(`/notice/${noticeId}`);
+    };
+
+    return (
+        <div className="flex w-screen">
+            <Sidebar setSelectedCategory={setSelectedCategory} />
+            <div className="w-full bg-white shadow-lg rounded-lg p-6">
+                <div className="p-4 font-semibold text-lg mb-4 text-blue-600">{selectedCategory}</div>
                 <div className="mb-4 flex flex-col sm:flex-row gap-4">
                     <input
                         type="text"
@@ -56,47 +58,38 @@ const Notices = () => {
                         className="p-2 border border-gray-300 rounded"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
-                        
                     />
-                    
                     <input
                         type="date"
-                        placeholder= "Search Date"
+                        placeholder="Search Date"
                         className="p-2 border border-gray-300 rounded"
                         value={searchDate}
                         onChange={(e) => setSearchDate(e.target.value)}
-                        
                     />
                 </div>
 
-                {/* Notices Table */}
-                <table className="table-auto w-full bg-white border-collapse">
-                    <thead>
-                        <tr className="bg-gray-200 text-left">
-                            
-                        </tr>
-                    </thead>
+                <table className="table-auto min-w-full bg-white border-collapse">
                     <tbody>
-                        {filteredNotices.length > 0 ? filteredNotices.map((notice, index) => (
-                            <React.Fragment key={notice.ind}>
-                                <tr className="border-b hover:bg-gray-100 cursor-pointer"
-                                    >
-                                    <td className="p-3 border">
-                                        <FaRegBookmark className='text-yellow-500'/>
-                                    </td>
-                                    <td className="p-3 border">{notice.postBy}</td>
-                                    <td className="p-3 border font-bold">{notice.subject}</td>
-                                    <td className="p-3 border">{notice.postOn}</td>
-                                    <td className="p-3 border">{notice.time}</td>
-                                </tr>
-                                {expandedNotice === index && (
-                                    <tr>
-                                        <td colSpan="5" className="p-4 bg-gray-50 text-gray-600">
-                                            {notice.Notice}
-                                        </td>
-                                    </tr>
-                                )}
-                            </React.Fragment>
+                        {paginatedNotices.length > 0 ? paginatedNotices.map((notice) => (
+                            <tr
+                                key={notice.ind}
+                                onClick={() => handleNoticeClick(notice.ind)}  // Navigate on row click
+                                className="border-b hover:bg-gray-100 cursor-pointer"
+                            >
+                                <td className="p-3 border">
+                                    <button onClick={(e) => { e.stopPropagation(); handleBookmarkToggle(notice.ind); }}>
+                                        {bookmarkedNotices.includes(notice.ind) ? (
+                                            <FaBookmark className='text-yellow-500' />
+                                        ) : (
+                                            <FaRegBookmark className='text-yellow-500' />
+                                        )}
+                                    </button>
+                                </td>
+                                <td className="p-3 border">{notice.postBy}</td>
+                                <td className="p-3 border font-bold">{notice.subject}</td>
+                                <td className="p-3 border">{notice.postOn}</td>
+                                <td className="p-3 border">{notice.time}</td>
+                            </tr>
                         )) : (
                             <tr>
                                 <td colSpan="5" className="p-3 text-center">No notices found.</td>
@@ -104,6 +97,27 @@ const Notices = () => {
                         )}
                     </tbody>
                 </table>
+
+                
+                {filteredNotices.length > 0 && totalPages > 1 && (
+                    <div className="flex justify-center space-x-4 mt-4">
+                        <button
+                            onClick={() => handlePageChange(currentPage - 1)}
+                            disabled={currentPage === 1}
+                            className="px-4 py-2 bg-blue-500 rounded hover:bg-gray-400"
+                        >
+                            Previous
+                        </button>
+                        <span>{`Page ${currentPage} of ${totalPages}`}</span>
+                        <button
+                            onClick={() => handlePageChange(currentPage + 1)}
+                            disabled={currentPage === totalPages}
+                            className="px-4 py-2 bg-blue-500 rounded hover:bg-gray-400"
+                        >
+                            Next
+                        </button>
+                    </div>
+                )}
             </div>
         </div>
     );

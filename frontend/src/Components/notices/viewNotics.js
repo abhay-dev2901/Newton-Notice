@@ -1,74 +1,143 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { FaThumbsUp, FaLaugh, FaHeart, FaSadCry } from 'react-icons/fa';
+import notices from './NoticesObject';
 
-const ViewNotice = ({ notice }) => {
-    const notices = [
-        {ind: 1, postBy:"Admin", subject: "PhD Viva Voce of Ms. Poonam S. Jaiswal",
-            Notice: "Cillum consequat cillum et do officia consectetur et sunt in nostrud aliquip commodo. Est esse voluptate reprehenderit velit excepteur et occaecat qui cupidatat aliquip fugiat minim. Sint culpa sit ex aute officia labore dolore. Officia cillum proident dolore duis."
-            , postOn: "2024-09-10" , time:"00:00 PM"},
-        {ind: 2, postBy:"Placement Office", subject: "Webstaff Co. Ltd: Submission of bio-data for pre-final year students",
-            Notice: "Cillum consequat cillum et do officia consectetur et sunt in nostrud aliquip commodo. Est esse voluptate reprehenderit velit excepteur et occaecat qui cupidatat aliquip fugiat minim. Sint culpa sit ex aute officia labore dolore. Officia cillum proident dolore duis."
-            , postOn: "2024-09-09" , time:"00:00 PM"},
-        {ind: 3, postBy:"Admin", subject: "Appointment of Faculty Coordinator for Cognizance 2019",
-            Notice: "Cillum consequat cillum et do officia consectetur et sunt in nostrud aliquip commodo. Est esse voluptate reprehenderit velit excepteur et occaecat qui cupidatat aliquip fugiat minim. Sint culpa sit ex aute officia labore dolore. Officia cillum proident dolore duis."
-            , postOn: "2024-09-08" , time:"00:00 PM"},
-        {ind: 4, postBy:"Dean Office", subject: "Sports Preliminary Coaching Camp",
-            Notice: "Cillum consequat cillum et do officia consectetur et sunt in nostrud aliquip commodo. Est esse voluptate reprehenderit velit excepteur et occaecat qui cupidatat aliquip fugiat minim. Sint culpa sit ex aute officia labore dolore. Officia cillum proident dolore duis."
-            , postOn: "2024-09-07" , time:"00:00 PM"},
-        {ind: 5, postBy:"Placement Office", subject: "Advaita 18 Update - Event Registration Invitation - Xccelerate, Pinnacle and Sphinxv",
-            Notice: "Cillum consequat cillum et do officia consectetur et sunt in nostrud aliquip commodo. Est esse voluptate reprehenderit velit excepteur et occaecat qui cupidatat aliquip fugiat minim. Sint culpa sit ex aute officia labore dolore. Officia cillum proident dolore duis."
-            , postOn: "2024-09-06" , time:"00:00 PM"},
-        {ind: 6, postBy:"Admin", subject: "KLA Tencor (Software Engineer): Submission of bio-data for pre-final year students",
-            Notice: "Cillum consequat cillum et do officia consectetur et sunt in nostrud aliquip commodo. Est esse voluptate reprehenderit velit excepteur et occaecat qui cupidatat aliquip fugiat minim. Sint culpa sit ex aute officia labore dolore. Officia cillum proident dolore duis."
-            , postOn: "2024-09-05" , time:"00:00 PM"},
-        {ind: 7, postBy:"OAA", subject: "Notification (74th Meeting of Senate): Admission of Sponsored candidate(s) for PG Diploma & M Tech programs",
-            Notice: "Cillum consequat cillum et do officia consectetur et sunt in nostrud aliquip commodo. Est esse voluptate reprehenderit velit excepteur et occaecat qui cupidatat aliquip fugiat minim. Sint culpa sit ex aute officia labore dolore. Officia cillum proident dolore duis."
-            , postOn: "2024-09-04" , time:"00:00 PM"},
-    ];
+const ViewNotice = () => {
+    const { id } = useParams();  // Get notice id from URL parameters
+    const [notice, setNotice] = useState(null);
+
+    const [userReaction, setUserReaction] = useState({
+        like: false,
+        laugh: false,
+        love: false,
+        sad: false,
+    });
+    
+    const [reactions, setReactions] = useState({
+        like: 0,
+        laugh: 0,
+        love: 0,
+        sad: 0,
+    });
+
+    const [comment, setComment] = useState('');
+    const [comments, setComments] = useState([]);
+
+    // Fetch the notice data based on id
+    useEffect(() => {
+        const fetchNotice = () => {
+            const fetchedNotice = notices.find(n => n.ind === parseInt(id));
+            setNotice(fetchedNotice);
+        };
+        fetchNotice();
+    }, [id]);
+
+    // Handle reaction updates (toggle on/off)
+    const handleReaction = (type) => {
+        setUserReaction(prevState => ({
+            ...prevState,
+            [type]: !prevState[type], // Toggle the selected reaction
+        }));
+
+        setReactions(prevReactions => ({
+            ...prevReactions,
+            [type]: userReaction[type] ? prevReactions[type] - 1 : prevReactions[type] + 1, // Increment/Decrement count
+        }));
+    };
+
+    // Handle comment submission
+    const handleCommentSubmit = (e) => {
+        e.preventDefault();
+        if (comment.trim()) {
+            setComments([...comments, comment]);
+            setComment('');
+        }
+    };
 
     if (!notice) {
-        return <div className="text-center">Notice not found.</div>;
+        return <div>Loading...</div>;
     }
 
     return (
-        <div className="max-w-4xl mx-auto bg-white shadow-lg p-6 rounded-lg">
-            {/* Notice Header */}
-            <div className="flex justify-between items-center mb-4">
-                <h1 className="text-2xl font-bold">{notice.subject}</h1>
-                <div className="flex space-x-4">
-                    {/* Share & Comment Icons */}
-                    <button className="text-blue-600">Share</button>
-                    <button className="text-blue-600">Comment</button>
+        <div className="flex justify-center h-screen bg-gray-100 p-6">
+            <div className="w-full max-w-3xl bg-white shadow-sm rounded border border-gray-300 p-6">
+                {/* Notice Header */}
+                <div className="border-b pb-4 mb-4">
+                    <h2 className="text-xl font-semibold mb-2 text-blue-800">{notice.subject}</h2>
+                    <div className="text-sm text-gray-500">
+                        <p><strong>Posted by:</strong> {notice.postBy}</p>
+                        <p><strong>Date:</strong> {notice.postOn} | <strong>Time:</strong> {notice.time}</p>
+                        <p><strong>Deadline:</strong> {notice.deadline}</p>
+                    </div>
                 </div>
-            </div>
 
-            {/* Notice Metadata */}
-            <div className="mb-4 text-gray-600">
-                <p><strong>Posted by:</strong> {notices.postBy}</p>
-                <p><strong>Posted on:</strong> {notices.postOn}</p>
-                <p><strong>Deadline:</strong> {notices.deadline || 'N/A'}</p>
-            </div>
+                {/* Notice Content */}
+                <div className="mb-4">
+                    <p className="text-gray-700 leading-relaxed whitespace-pre-line">{notice.Notice}</p>
+                </div>
 
-            {/* Notice Content */}
-            <div className="mb-6">
-                <p>{notice.mainContent}</p>
-            </div>
+                {/* Reaction Section */}
+                <div className="flex space-x-4 border-t pt-4 mb-6">
+                    <button
+                        className={`flex items-center ${userReaction.like ? 'text-blue-500' : 'text-gray-600'} hover:text-blue-500`}
+                        onClick={() => handleReaction('like')}
+                    >
+                        <FaThumbsUp className="mr-1" /> Like {reactions.like > 1 && reactions.like}
+                    </button>
+                    <button
+                        className={`flex items-center ${userReaction.laugh ? 'text-blue-500' : 'text-gray-600'} hover:text-blue-500`}
+                        onClick={() => handleReaction('laugh')}
+                    >
+                        <FaLaugh className="mr-1" /> Laugh {reactions.laugh > 1 && reactions.laugh}
+                    </button>
+                    <button
+                        className={`flex items-center ${userReaction.love ? 'text-blue-500' : 'text-gray-600'} hover:text-blue-500`}
+                        onClick={() => handleReaction('love')}
+                    >
+                        <FaHeart className="mr-1" /> Love {reactions.love > 1 && reactions.love}
+                    </button>
+                    <button
+                        className={`flex items-center ${userReaction.sad ? 'text-blue-500' : 'text-gray-600'} hover:text-blue-500`}
+                        onClick={() => handleReaction('sad')}
+                    >
+                        <FaSadCry className="mr-1" /> Sad {reactions.sad > 1 && reactions.sad}
+                    </button>
+                </div>
 
-            {/* Regards */}
-            <div className="border-t pt-4 text-gray-600">
-                <p><strong>Regards,</strong></p>
-                <p>{notice.postBy}</p>
-            </div>
-
-            {/* Comments Section */}
-            <div className="mt-8">
-                <h2 className="text-xl font-semibold mb-4">Comments</h2>
-                {/* Add Comment Form */}
+                {/* Comments Section */}
                 <div className="mb-6">
-                    <textarea className="w-full p-3 border rounded" rows="3" placeholder="Add a comment..."></textarea>
-                    <button className="bg-blue-600 text-white px-4 py-2 mt-2 rounded">Post Comment</button>
+                    <h3 className="text-lg font-semibold text-gray-800 mb-2">Comments</h3>
+                    {comments.length > 0 ? (
+                        <ul className="space-y-2">
+                            {comments.map((comment, index) => (
+                                <li key={index} className="p-2 bg-gray-50 border border-gray-200 rounded">
+                                    <h3 className='font-semibold'>You</h3>
+                                    {comment}
+                                </li>
+                            ))}
+                        </ul>
+                    ) : (
+                        <p className="text-gray-500">No comments yet. Be the first to comment!</p>
+                    )}
                 </div>
-                {/* Display Comments */}
-                {/* This part will be dynamically loaded with comments */}
+
+                {/* Comment Form */}
+                <form onSubmit={handleCommentSubmit} className="flex flex-col space-y-2">
+                    <textarea
+                        value={comment}
+                        onChange={(e) => setComment(e.target.value)}
+                        placeholder="Add a comment..."
+                        className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        rows="3"
+                    />
+                    <button
+                        type="submit"
+                        className="self-end px-4 py-2 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600 transition duration-300"
+                    >
+                        Add Comment
+                    </button>
+                </form>
             </div>
         </div>
     );
