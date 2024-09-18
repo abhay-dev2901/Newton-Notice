@@ -10,7 +10,7 @@ const Sidebar = ({ setSelectedCategory }) => {
     { name: 'All Notices', icon: <FaRegStickyNote /> },
     { name: 'Important Notices', icon: <FaStar /> },
     {
-      name: 'Authorities Notices',
+      name: 'Authorities',
       icon: <FaUniversity />,
       dropdown: [
         { name: 'Dean Office' },
@@ -20,7 +20,7 @@ const Sidebar = ({ setSelectedCategory }) => {
       ],
     },
     {
-      name: 'Departments Notices',
+      name: 'Departments',
       icon: <FaBuilding />,
       dropdown: [
         { name: 'B.tech CS AND AI' },
@@ -35,15 +35,15 @@ const Sidebar = ({ setSelectedCategory }) => {
   ];
 
   const handleDropdown = (itemName) => {
-    if (itemName === 'Authorities Notices') {
+    if (itemName === 'Authorities') {
       setShowAuthoritiesDropdown(!showAuthoritiesDropdown);
-    } else if (itemName === 'Departments Notices') {
+    } else if (itemName === 'Departments') {
       setShowDepartmentsDropdown(!showDepartmentsDropdown);
     }
   };
 
   return (
-    <div className="h-full bg-blue-600 w-fit min-h-screen">
+    <div className="h-full bg-blue-600 w-3/12 min-h-screen">
       <div className="p-5">
         <ul className="list-none p-0 m-0">
           {menuItems.map((item, index) => (
@@ -62,10 +62,10 @@ const Sidebar = ({ setSelectedCategory }) => {
                 <span>{item.name}</span>
                 {item.dropdown && (
                   <>
-                    {item.name === 'Authorities Notices' && (
+                    {item.name === 'Authorities' && (
                       showAuthoritiesDropdown ? <FaChevronUp /> : <FaChevronDown />
                     )}
-                    {item.name === 'Departments Notices' && (
+                    {item.name === 'Departments' && (
                       showDepartmentsDropdown ? <FaChevronUp /> : <FaChevronDown />
                     )}
                   </>
@@ -73,12 +73,17 @@ const Sidebar = ({ setSelectedCategory }) => {
               </li>
 
               {/* Dropdown for Authorities Notices */}
-              {item.name === 'Authorities Notices' && showAuthoritiesDropdown && (
-                <ul className="pl-8 list-none p-0 m-0">
+              {item.name === 'Authorities' && (
+                <ul
+                  className={`pl-8 list-none p-0 m-0 overflow-hidden transition-max-height duration-1000 ease-in-out`}
+                  style={{
+                    maxHeight: showAuthoritiesDropdown ? '200px' : '0', // Adjust maxHeight as per content
+                  }}
+                >
                   {item.dropdown.map((subItem, subIndex) => (
                     <li
                       key={subIndex}
-                      className={`text-white cursor-pointer hover:bg-blue-500 transition duration-300 ease-in-out rounded-lg
+                      className={`text-white cursor-pointer hover:bg-blue-500 transition duration-1000 ease-in-out rounded-lg
                       ${active === subItem.name ? 'bg-blue-700' : ''}`}
                       onClick={() => {
                         setActive(subItem.name);
@@ -93,12 +98,17 @@ const Sidebar = ({ setSelectedCategory }) => {
               )}
 
               {/* Dropdown for Departments Notices */}
-              {item.name === 'Departments Notices' && showDepartmentsDropdown && (
-                <ul className="pl-8 list-none p-0 m-0">
+              {item.name === 'Departments' && (
+                <ul
+                  className={`pl-8 list-none p-0 m-0 overflow-hidden transition-max-height duration-1000 ease-in-out`}
+                  style={{
+                    maxHeight: showDepartmentsDropdown ? '200px' : '0', // Adjust maxHeight as per content
+                  }}
+                >
                   {item.dropdown.map((subItem, subIndex) => (
                     <li
                       key={subIndex}
-                      className={`text-white cursor-pointer hover:bg-blue-500 transition duration-300 ease-in-out rounded-lg
+                      className={`text-white cursor-pointer hover:bg-blue-500 transition duration-1000 ease-in-out rounded-lg
                       ${active === subItem.name ? 'bg-blue-700' : ''}`}
                       onClick={() => {
                         setActive(subItem.name);

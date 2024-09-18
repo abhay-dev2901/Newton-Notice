@@ -24,7 +24,6 @@ const Home = () => {
             <Link to="/" className="text-white hover:text-gray-300 font-semibold">Home</Link>
             <Link to="/about" className="text-white hover:text-gray-300 font-semibold">About</Link>
             <Link to="/notices" className="text-white hover:text-gray-300 font-semibold">Notices</Link>
-            <Link to="/events" className="text-white hover:text-gray-300 font-semibold">Events</Link>
             <Link to="/login" className="text-white hover:text-gray-300 font-semibold">Login</Link>
             <Link to="/signup" className="text-white hover:text-gray-300 font-semibold">Sign Up</Link>
           </nav>
@@ -55,7 +54,6 @@ const Home = () => {
           <div className="flex justify-center space-x-8 mb-4">
             <Link to="/about" className="hover:underline">About</Link>
             <Link to="/notices" className="hover:underline">Notices</Link>
-            <Link to="/events" className="hover:underline">Events</Link>
             <Link to="/login" className="hover:underline">Login</Link>
             <Link to="/signup" className="hover:underline">Sign Up</Link>
           </div>

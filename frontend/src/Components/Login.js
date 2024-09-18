@@ -16,7 +16,7 @@ const Login = () => {
       // Handle Student login logic
       console.log("Student Login");
     }
-    navigate('/');
+    navigate('/notices');
   };
 
   return (
