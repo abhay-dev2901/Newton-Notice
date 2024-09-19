@@ -31,21 +31,21 @@ const StudentSignup = () => {
     <div className="relative flex min-h-screen">
       {/* Left Side: Background Image */}
       <div
-        className="w-1/2 h-screen bg-cover bg-center relative"
+        className="md:w-1/2 w-0 h-screen bg-cover bg-center relative"
         style={{ backgroundImage: `url(${hero})` }}
       >
         <div className="absolute inset-0 bg-black bg-opacity-40"></div>
       </div>
 
       {/* Right Side: Student Signup Form */}
-      <div className="w-1/2 flex flex-col justify-center items-center bg-white">
+      <div className="md:w-1/2 w-0 flex flex-col justify-center items-center bg-white">
         <img src={logo} className="h-12 w-auto mb-8" alt="Logo" />
 
         <div className="text-center">
           <h1 className="text-4xl font-bold text-gray-800 mb-4 animate-slideIn">
             Student Signup
           </h1>
-          <p className="text-lg text-gray-600 mb-6 animate-fadeIn">
+          <p className="md:text-lg text-sm text-gray-600 mb-6 animate-fadeIn">
             Please enter your details to create a Student account
           </p>
 
@@ -58,7 +58,7 @@ const StudentSignup = () => {
                 value={studentDetails.studentId}
                 onChange={handleChange}
                 placeholder="Student ID"
-                className="w-full px-4 py-2 border rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="md:w-full w-10/12 px-4 py-2 border rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 required
               />
             </div>
@@ -69,7 +69,7 @@ const StudentSignup = () => {
                 value={studentDetails.name}
                 onChange={handleChange}
                 placeholder="Full Name"
-                className="w-full px-4 py-2 border rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="md:w-full w-10/12 px-4 py-2 border rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 required
               />
             </div>
@@ -80,7 +80,7 @@ const StudentSignup = () => {
                 value={studentDetails.email}
                 onChange={handleChange}
                 placeholder="Email"
-                className="w-full px-4 py-2 border rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="md:w-full w-10/12 px-4 py-2 border rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 required
               />
             </div>
@@ -91,14 +91,14 @@ const StudentSignup = () => {
                 value={studentDetails.password}
                 onChange={handleChange}
                 placeholder="Password"
-                className="w-full px-4 py-2 border rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="md:w-full w-10/12 px-4 py-2 border rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 required
               />
             </div>
 
             <button
               type="submit"
-              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-full shadow-md transition duration-300 transform hover:scale-105 w-full"
+              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-full shadow-md transition duration-300 transform hover:scale-105 md:w-full w-8/12"
             >
               Signup
             </button>

@@ -23,31 +23,31 @@ const Login = () => {
     <div className="relative flex min-h-screen">
       {/* Left Side: Background Image */}
       <div
-        className="w-1/2 h-screen bg-cover bg-center relative"
+        className="md:w-1/2 w-0 h-screen bg-cover bg-center relative"
         style={{ backgroundImage: `url(${hero})` }}
       >
         <div className="absolute inset-0 bg-black bg-opacity-40"></div>
       </div>
 
       {/* Right Side: Login Form */}
-      <div className="w-1/2 flex flex-col justify-center items-center bg-white">
+      <div className="md:w-1/2 w-full flex flex-col justify-center items-center bg-white">
         <img src={logo} className="h-12 w-auto mb-8" alt="Logo" />
 
         <div className="text-center">
           <h1 className="text-4xl font-bold text-gray-800 mb-4 animate-slideIn">
             {isAdmin ? 'Admin Login' : 'Student Login'}
           </h1>
-          <p className="text-lg text-gray-600 mb-6 animate-fadeIn">
+          <p className="md:text-lg text-sm text-gray-600 mb-6 animate-fadeIn">
             Please enter your {isAdmin ? 'Admin ID' : 'Student ID'} and Password
           </p>
 
           {/* Login Form */}
-          <form className="space-y-4 animate-bounceIn" onSubmit={handleLogin}>
+          <form className="space-y-6 animate-bounceIn" onSubmit={handleLogin}>
             <div>
               <input
                 type="text"
                 placeholder={isAdmin ? "Admin ID" : "Student ID"}
-                className="w-full px-4 py-2 border rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="md:w-full w-10/12 px-4 py-2 border rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 required
               />
             </div>
@@ -55,14 +55,14 @@ const Login = () => {
               <input
                 type="password"
                 placeholder="Password"
-                className="w-full px-4 py-2 border rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="md:w-full w-10/12 px-4 py-2 border rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 required
               />
             </div>
 
             <button
               type="submit"
-              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-full shadow-md transition duration-300 transform hover:scale-105 w-full"
+              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-full shadow-md transition duration-300 transform hover:scale-105 md:w-full w-10/12"
             >
               Login
             </button>
