@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FaRegStickyNote, FaStar, FaUniversity, FaBuilding, FaBookmark, FaBriefcase, FaRegClock, FaChevronDown, FaChevronUp } from 'react-icons/fa';
 
-const Sidebar = ({ setSelectedCategory , setShowSidebar }) => {
+const Sidebar = ({ setSelectedCategory, setShowSidebar }) => {
     const [active, setActive] = useState('All Notices');
     const [showAuthoritiesDropdown, setShowAuthoritiesDropdown] = useState(false);
     const [showDepartmentsDropdown, setShowDepartmentsDropdown] = useState(false);
@@ -42,20 +42,19 @@ const Sidebar = ({ setSelectedCategory , setShowSidebar }) => {
         }
     };
 
-    function toggleSidebar(item,setShowSidebar, handleDropdown){
-      const mediaQuery = window.matchMedia("(max-width: 600px)")
-      if (!item.dropdown && mediaQuery.matches) {
-        setShowSidebar(false); // Always hide for non-dropdown items
-        return;
-      } 
-      else if(!mediaQuery.matches) {
-          setShowSidebar(true);  // Toggle sidebar for smaller screens
+    const toggleSidebar = (item, setShowSidebar, handleDropdown) => {
+        const mediaQuery = window.matchMedia("(max-width: 600px)");
+        if (!item.dropdown && mediaQuery.matches) {
+            setShowSidebar(false); 
+            return;
+        } else if (!mediaQuery.matches) {
+            setShowSidebar(true); 
         }
         handleDropdown(item.name);
-      }
+    };
 
     return (
-        <div className="bg-blue-600 md:static fixed top-0 left-0 h-screen z-10 md:w-3/12 w-11/12">
+        <div className="bg-blue-600 md:static fixed top-0 left-0 h-screen z-10 md:w-3/12 w-9/12">
             <div className="p-5">
                 <ul className="list-none p-0 m-0">
                     {menuItems.map((item, index) => (
@@ -65,8 +64,7 @@ const Sidebar = ({ setSelectedCategory , setShowSidebar }) => {
                                 onClick={() => {
                                     setActive(item.name);
                                     setSelectedCategory(item.name);
-                                    toggleSidebar(item,setShowSidebar,handleDropdown)
-                                    
+                                    toggleSidebar(item, setShowSidebar, handleDropdown);
                                 }}
                                 style={{ padding: '10px 15px' }}
                             >
@@ -81,17 +79,18 @@ const Sidebar = ({ setSelectedCategory , setShowSidebar }) => {
                             </li>
 
                             {/* Dropdown for Authorities Notices */}
-                            {item.name === 'Authorities' && showAuthoritiesDropdown && (
-                                <ul className="pl-8 list-none p-0 m-0">
+                            {item.name === 'Authorities' && (
+                                <ul className={`pl-8 list-none p-0 m-0 transition-all duration-1000 ease-in-out overflow-hidden ${showAuthoritiesDropdown ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'}`}>
                                     {item.dropdown.map((subItem, subIndex) => (
                                         <li
                                             key={subIndex}
-                                            className={`text-white cursor-pointer hover:bg-blue-500 p-2 rounded-lg transition duration-300 ease-in-out ${active === subItem.name ? 'bg-blue-700' : ''}`}
+                                            className={`text-white cursor-pointer hover:bg-blue-300 p-2 rounded-lg transition duration-300 ease-in-out ${active === subItem.name ? 'bg-blue-700' : ''}`}
                                             onClick={() => {
                                                 setActive(subItem.name);
                                                 setSelectedCategory(subItem.name);
-                          
-                                                toggleSidebar(item,setShowSidebar,handleDropdown)
+                                                
+                                                // setShowSidebar(false)
+                                                
                                             }}
                                         >
                                             {subItem.name}
@@ -101,16 +100,16 @@ const Sidebar = ({ setSelectedCategory , setShowSidebar }) => {
                             )}
 
                             {/* Dropdown for Departments Notices */}
-                            {item.name === 'Departments' && showDepartmentsDropdown && (
-                                <ul className="pl-8 list-none p-0 m-0">
+                            {item.name === 'Departments' && (
+                                <ul className={`pl-8 list-none p-0 m-0 transition-all duration-1000 ease-in-out overflow-hidden ${showDepartmentsDropdown ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'}`}>
                                     {item.dropdown.map((subItem, subIndex) => (
                                         <li
                                             key={subIndex}
-                                            className={`text-white cursor-pointer hover:bg-blue-500 p-2 rounded-lg transition duration-300 ease-in-out ${active === subItem.name ? 'bg-blue-700' : ''}`}
+                                            className={`text-white cursor-pointer hover:bg-blue-300 p-2 rounded-lg transition duration-600 ease-in-out ${active === subItem.name ? 'bg-blue-700' : ''}`}
                                             onClick={() => {
                                                 setActive(subItem.name);
                                                 setSelectedCategory(subItem.name);
-                                                toggleSidebar(item,setShowSidebar,handleDropdown)
+                                                // setShowSidebar(false)
                                             }}
                                         >
                                             {subItem.name}

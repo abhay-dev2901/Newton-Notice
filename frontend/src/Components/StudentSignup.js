@@ -38,7 +38,7 @@ const StudentSignup = () => {
       </div>
 
       {/* Right Side: Student Signup Form */}
-      <div className="md:w-1/2 w-0 flex flex-col justify-center items-center bg-white">
+      <div className="md:w-1/2 w-full flex flex-col justify-center items-center bg-white">
         <img src={logo} className="h-12 w-auto mb-8" alt="Logo" />
 
         <div className="text-center">

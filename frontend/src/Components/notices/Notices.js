@@ -57,11 +57,11 @@ const Notices = () => {
             {showSidebar && <Sidebar setSelectedCategory={setSelectedCategory} setShowSidebar={setShowSidebar} />}
 
             <div className="relative md:absolute text-blue-600 cursor-pointer md:hidden z-20" onClick={handleSidebar}>
-                {showSidebar ? <FaTimes size={28} className="text-white " /> : <FaBars size={28} />}
+                {showSidebar ? <FaTimes size={20} className="text-white " /> : <FaBars size={20} />}
             </div>
             
             <div className="md:w-full p-6">
-                <div className="text-2xl font-semibold text-blue-700 mb-1">{selectedCategory}</div>
+                <div className="md:text-2xl text-l font-semibold text-blue-700 mb-1">{selectedCategory}</div>
                 <div className="mb-2 flex flex-col sm:flex-row gap-4">
                     <input
                         type="text"
@@ -72,7 +72,7 @@ const Notices = () => {
                     />
                     <input
                         type="date"
-                        className="p-3 w-full sm:w-1/3 border border-gray-300 rounded shadow-sm focus:outline-none focus:border-blue-400"
+                        className="p-3 w-full text-l sm:w-1/3 border border-gray-300 rounded shadow-sm focus:outline-none focus:border-blue-400"
                         value={searchDate}
                         onChange={(e) => setSearchDate(e.target.value)}
                     />
@@ -88,16 +88,16 @@ const Notices = () => {
                         >
                             <button 
                                 onClick={(e) => { e.stopPropagation(); handleBookmarkToggle(notice.ind); }} 
-                                className="absolute top-4 right-4 text-yellow-500"
+                                className="absolute top-1 right-4 text-yellow-500"
                             >
                                 {bookmarkedNotices.includes(notice.ind) ? (
-                                    <FaBookmark size={24} />
+                                    <FaBookmark size={24 } />
                                 ) : (
                                     <FaRegBookmark size={24} />
                                 )}
                             </button>
-                            <div className="text-lg font-semibold text-blue-600">{notice.subject}</div>
-                            <div className="text-gray-600 mt-2">{notice.postBy}</div>
+                            <div className="md:text-xl text-l font-semibold text-blue-600">{notice.subject}</div>
+                            <div className="text-gray-600 mt-2 md:text-sm">{notice.postBy}</div>
                             <div className="text-gray-500 text-sm mt-1">{new Date(notice.postOn).toLocaleDateString()} | {notice.time}</div>
                         </div>
                     )) : (

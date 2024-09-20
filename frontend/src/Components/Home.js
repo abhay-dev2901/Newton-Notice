@@ -36,15 +36,15 @@ const Home = () => {
           </nav>
 
           {/* Mobile Menu Button */}
-          <div className="text-white cursor-pointer md:hidden" onClick={toggleNavbar}>
+          <div className="text-white cursor-pointer md:hidden z-96" onClick={toggleNavbar}>
             {isNavbarOpen ? <FaTimes size={28} /> : <FaBars size={28} />}
           </div>
         </div>
 
         {/* Mobile Navbar (Visible when toggled) */}
         <nav
-          className={`absolute top-0 right-0 h-auto bg-blue-900 text-white flex flex-col items-center md:hidden transition-transform duration-300 ${
-            isNavbarOpen ? 'translate-x-0' : 'translate-x-full'
+          className={`absolute top-0 left-0 h-screen z-50 bg-blue-900 text-white flex flex-col items-center md:hidden transition-transform duration-300 ${
+            isNavbarOpen ? 'translate-x-0' : '-translate-x-full'
           }`}
         >
           <Link to="/" className="p-4 hover:text-gray-300 font-semibold" onClick={toggleNavbar}>Home</Link>
