@@ -17,12 +17,14 @@ const Notices = () => {
 
     const filteredCategory = selectedCategory === 'Bookmarks' ? 'bookmarked' : selectedCategory;
 
+
     const filteredNotices = notices.filter(notice => {
         const isSearchMatch = notice.subject.toLowerCase().includes(searchTerm.toLowerCase());
         const isCategoryMatch = filteredCategory === 'bookmarked' ? bookmarkedNotices.includes(notice.ind) : filteredCategory === 'All Notices' || notice.postBy === filteredCategory;
         const isDateMatch = searchDate ? new Date(notice.postOn).toDateString() === new Date(searchDate).toDateString() : true;
+        const isDepartmentMatch = notice.Department == selectedCategory 
 
-        return isSearchMatch && isCategoryMatch && isDateMatch;
+        return isSearchMatch && isCategoryMatch && isDateMatch || isDepartmentMatch;
     });
 
     const totalPages = Math.ceil(filteredNotices.length / itemsPerPage);
