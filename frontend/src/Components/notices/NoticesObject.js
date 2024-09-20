@@ -53,7 +53,7 @@ const notices = [
     {ind: 19, postBy:"Dean office", subject: "Notification (74th Meeting of Senate): Admission of Sponsored candidate(s) for PG Diploma & M Tech programs",
         Notice: "Cillum consequat cillum et do officia consectetur et sunt in nostrud aliquip commodo. Est esse voluptate reprehenderit velit excepteur et occaecat qui cupidatat aliquip fugiat minim. Sint culpa sit ex aute officia labore dolore. Officia cillum proident dolore duis."
         , postOn: "2024-08-21" , time:"00:00 PM"},
-    {ind: 20, postBy:"VC Office", subject: "Notification (74th Meeting of Senate): Admission of Sponsored candidate(s) for PG Diploma & M Tech programs",
+    {ind: 20, postBy:"Admin", subject: "Notification (74th Meeting of Senate): Admission of Sponsored candidate(s) for PG Diploma & M Tech programs",
         Notice: "Cillum consequat cillum et do officia consectetur et sunt in nostrud aliquip commodo. Est esse voluptate reprehenderit velit excepteur et occaecat qui cupidatat aliquip fugiat minim. Sint culpa sit ex aute officia labore dolore. Officia cillum proident dolore duis."
         , postOn: "2021-08-21" , time:"00:00 PM"},
     {ind: 21, postBy:"Placement office", subject: "Notification (74th Meeting of Senate): Admission of Sponsored candidate(s) for PG Diploma & M Tech programs",

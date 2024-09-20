@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
-import { FaRegBookmark, FaBookmark } from "react-icons/fa";
+import { FaRegBookmark, FaBookmark, FaBars, FaTimes } from "react-icons/fa";
 import notices from './NoticesObject';
 import Sidebar from './sidebar';
 import { useNavigate } from 'react-router-dom';
 
-const Notices = ({ data }) => {
+const Notices = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [searchDate, setSearchDate] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('All Notices');
     const [currentPage, setCurrentPage] = useState(1);
+    const [showSidebar, setShowSidebar] = useState(true);
     const [bookmarkedNotices, setBookmarkedNotices] = useState([]);
     const itemsPerPage = 4;
 
@@ -26,6 +27,7 @@ const Notices = ({ data }) => {
 
     const totalPages = Math.ceil(filteredNotices.length / itemsPerPage);
     const paginatedNotices = filteredNotices.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+    // const paginatedNotices = [];
 
     const handlePageChange = (page) => {
         if (page >= 1 && page <= totalPages) {
@@ -45,10 +47,20 @@ const Notices = ({ data }) => {
         navigate(`/notice/${noticeId}`);
     };
 
+    const handleSidebar = () => {
+        setShowSidebar(!showSidebar);
+
+    };
+
     return (
         <div className="flex w-screen bg-gray-100">
-            <Sidebar setSelectedCategory={setSelectedCategory} />
-            <div className="w-full p-6">
+            {showSidebar && <Sidebar setSelectedCategory={setSelectedCategory} setShowSidebar={setShowSidebar} />}
+
+            <div className="relative md:absolute text-blue-600 cursor-pointer md:hidden z-20" onClick={handleSidebar}>
+                {showSidebar ? <FaTimes size={28} className="text-white " /> : <FaBars size={28} />}
+            </div>
+            
+            <div className="md:w-full p-6">
                 <div className="text-2xl font-semibold text-blue-700 mb-1">{selectedCategory}</div>
                 <div className="mb-2 flex flex-col sm:flex-row gap-4">
                     <input
@@ -71,7 +83,8 @@ const Notices = ({ data }) => {
                         <div 
                             key={notice.ind} 
                             onClick={() => handleNoticeClick(notice.ind)}
-                            className="p-6 bg-white shadow-md rounded-lg hover:shadow-xl transition duration-300 ease-in-out transform hover:scale-105 cursor-pointer relative"
+                            className="p-6 bg-white shadow-md rounded-lg hover:shadow-xl transition duration-300 
+                            ease-in-out transform hover:scale-105 cursor-pointer"
                         >
                             <button 
                                 onClick={(e) => { e.stopPropagation(); handleBookmarkToggle(notice.ind); }} 
