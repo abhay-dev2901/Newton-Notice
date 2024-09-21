@@ -43,7 +43,7 @@ const Home = () => {
 
         {/* Mobile Navbar (Visible when toggled) */}
         <nav
-          className={`absolute top-0 left-0 h-screen z-50 bg-blue-900 text-white flex flex-col items-center md:hidden transition-transform duration-300 ${
+          className={`absolute w-4/12 top-0 left-0 h-screen z-50 bg-blue-900 text-white flex flex-col items-center md:hidden transition-transform duration-300 ${
             isNavbarOpen ? 'translate-x-0' : '-translate-x-full'
           }`}
         >

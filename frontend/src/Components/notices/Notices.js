@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaRegBookmark, FaBookmark, FaBars, FaTimes } from "react-icons/fa";
 import notices from './NoticesObject';
 import Sidebar from './sidebar';
@@ -12,7 +12,12 @@ const Notices = () => {
     const [showSidebar, setShowSidebar] = useState(true);
     const [bookmarkedNotices, setBookmarkedNotices] = useState([]);
     const itemsPerPage = 4;
-
+    useEffect(()=>{
+        if(window.innerWidth <= 701){
+                setShowSidebar(false);
+            }
+            console.log(window.innerWidth < 700);
+    },[])
     const navigate = useNavigate();
 
     const filteredCategory = selectedCategory === 'Bookmarks' ? 'bookmarked' : selectedCategory;
@@ -22,7 +27,7 @@ const Notices = () => {
         const isSearchMatch = notice.subject.toLowerCase().includes(searchTerm.toLowerCase());
         const isCategoryMatch = filteredCategory === 'bookmarked' ? bookmarkedNotices.includes(notice.ind) : filteredCategory === 'All Notices' || notice.postBy === filteredCategory;
         const isDateMatch = searchDate ? new Date(notice.postOn).toDateString() === new Date(searchDate).toDateString() : true;
-        const isDepartmentMatch = notice.Department == selectedCategory 
+        const isDepartmentMatch = notice.Department == selectedCategory && (setSelectedCategory("All Notices") ? (selectedCategory === "Departments" || selectedCategory === "Authorities") : selectedCategory)
 
         return isSearchMatch && isCategoryMatch && isDateMatch || isDepartmentMatch;
     });
@@ -59,7 +64,7 @@ const Notices = () => {
             {showSidebar && <Sidebar setSelectedCategory={setSelectedCategory} setShowSidebar={setShowSidebar} />}
 
             <div className="relative md:absolute text-blue-600 cursor-pointer md:hidden z-20" onClick={handleSidebar}>
-                {showSidebar ? <FaTimes size={20} className="text-white " /> : <FaBars size={20} />}
+                {showSidebar ? <FaTimes size={28} className="text-white " /> : <FaBars size={28} />}
             </div>
             
             <div className="md:w-full p-6">
