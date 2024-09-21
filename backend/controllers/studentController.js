@@ -14,7 +14,7 @@ exports.studentSignUp = async (req,res) => {
 
     try{
         const existingStudent = await prisma.student.findUnique({
-            where: { email: email },
+            where: { enrollmentId: enrollmentId },
         })
 
         if(existingStudent){
@@ -43,7 +43,7 @@ exports.studentSignUp = async (req,res) => {
 
 
 exports.studentSignIn = async (req, res) => {
-    const {email, password} = req.body;
+    const {enrollmentId, password} = req.body;
 
     try{
         const student = await prisma.student.findUnique({

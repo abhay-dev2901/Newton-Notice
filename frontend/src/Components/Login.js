@@ -3,20 +3,57 @@ import { useNavigate } from 'react-router-dom';
 import logo from "../Photos/Newton x Rishihood.png";
 import hero from "../Photos/RU-Website-HomeBanner-1.png";
 
+
 const Login = () => {
   const [isAdmin, setIsAdmin] = useState(false); // Toggle between Admin and Student login
+  const [message, setMessage] = useState('');
+  const [loginDetails, setLoginDetails] = useState({
+    enrollmentId: '',
+    password: '',
+  });
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    setLoginDetails({
+      ...loginDetails,
+      [name]: name === 'enrollmentId' ? parseInt(value) : value,
+    });
+  };
+
+  const handleLogin = async (e) => {
     e.preventDefault();
-    if (isAdmin) {
-      // Handle Admin login logic
-      console.log("Admin Login");
-    } else {
-      // Handle Student login logic
-      console.log("Student Login");
+    try {
+      const url = isAdmin
+        ? 'http://localhost:3002/admin/signin'
+        : 'http://localhost:3002/student/signin';
+
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(loginDetails),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setMessage('Login Successful');
+        // Redirect based on user role
+        if (isAdmin) {
+          navigate('/admin-dashboard'); // Adjust this route for admin
+        } else {
+          navigate('/notices');
+        }
+      } else {
+        setMessage(data.message || 'Invalid ID or password');
+      }
+    } catch (err) {
+      setMessage('Error occurred while logging in');
+      console.error(err);
     }
-    navigate('/notices');
   };
 
   return (
@@ -45,8 +82,11 @@ const Login = () => {
           <form className="space-y-6 animate-bounceIn" onSubmit={handleLogin}>
             <div>
               <input
-                type="text"
-                placeholder={isAdmin ? "Admin ID" : "Student ID"}
+                type="number"
+                name="enrollmentId"
+                value={loginDetails.enrollmentId}
+                onChange={handleChange}
+                placeholder={isAdmin ? 'Admin ID' : 'Student ID'}
                 className="md:w-full w-10/12 px-4 py-2 border rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 required
               />
@@ -54,6 +94,9 @@ const Login = () => {
             <div>
               <input
                 type="password"
+                name="password"
+                value={loginDetails.password}
+                onChange={handleChange}
                 placeholder="Password"
                 className="md:w-full w-10/12 px-4 py-2 border rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 required
@@ -68,7 +111,7 @@ const Login = () => {
             </button>
           </form>
 
-          {/* Switch between Admin and Student Login */}
+          {/* Toggle between Admin and Student Login */}
           <div className="mt-6">
             <p className="text-lg font-light">
               {isAdmin ? 'Want to login as Student?' : 'Want to login as Admin?'}{' '}
@@ -93,6 +136,8 @@ const Login = () => {
               </button>
             </p>
           </div>
+
+          {message && <p className="mt-4 text-red-500">{message}</p>}
         </div>
       </div>
     </div>

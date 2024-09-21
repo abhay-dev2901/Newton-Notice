@@ -42,6 +42,7 @@ const StudentSignup = () => {
         const data = await response.json()
         if(response.ok){
             setMessage(data.message)
+            navigate('/login')
         }else{
             setMessage(data.message || "Something went wrong")
         } 

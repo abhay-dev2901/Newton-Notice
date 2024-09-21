@@ -30,7 +30,7 @@ const Home = () => {
           <nav className="hidden md:flex space-x-4 md:space-x-6">
             <Link to="/" className="text-white text-sm md:text-base hover:text-gray-300 font-semibold">Home</Link>
             <Link to="/about" className="text-white text-sm md:text-base hover:text-gray-300 font-semibold">About</Link>
-            <Link to="/notices" className="text-white text-sm md:text-base hover:text-gray-300 font-semibold">Notices</Link>
+            <Link to="/login" className="text-white text-sm md:text-base hover:text-gray-300 font-semibold">Notices</Link>
             <Link to="/login" className="text-white text-sm md:text-base hover:text-gray-300 font-semibold">Login</Link>
             <Link to="/signup" className="text-white text-sm md:text-base hover:text-gray-300 font-semibold">Sign Up</Link>
           </nav>
