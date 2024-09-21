@@ -3,28 +3,53 @@ import { useNavigate } from 'react-router-dom';
 import logo from "../Photos/Newton x Rishihood.png";
 import hero from "../Photos/RU-Website-HomeBanner-1.png";
 
+
+
 const StudentSignup = () => {
   const [studentDetails, setStudentDetails] = useState({
-    studentId: '',
+    enrollmentId: '',
     name: '',
     email: '',
     password: '',
   });
   const navigate = useNavigate();
+  const [message , setMessage] = useState('')
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+  
+
     setStudentDetails({
       ...studentDetails,
-      [name]: value,
+      [name]: name === 'enrollmentId' ? parseInt(value) : value,
     });
   };
+  
 
-  const handleSignup = (e) => {
+
+  const handleSignup = async (e) => {
     e.preventDefault();
-    // Handle Student Signup Logic
+
+    try{
+        const response = await fetch("http://localhost:3002/student/signUp",{
+            method: 'POST',
+            headers: {
+                'Content-Type':'application/json'
+            },
+            body: JSON.stringify(studentDetails)
+        });
+
+        const data = await response.json()
+        if(response.ok){
+            setMessage(data.message)
+        }else{
+            setMessage(data.message || "Something went wrong")
+        } 
+    }  catch(err){
+        setMessage("Error occured while signing Up")
+    }
+
     console.log(studentDetails);
-    navigate('/login');
   };
 
   return (
@@ -53,11 +78,11 @@ const StudentSignup = () => {
           <form className="space-y-4 animate-bounceIn" onSubmit={handleSignup}>
             <div>
               <input
-                type="text"
-                name="studentId"
-                value={studentDetails.studentId}
+                type="number"
+                name="enrollmentId"
+                value={studentDetails.enrollmentId}
                 onChange={handleChange}
-                placeholder="Student ID"
+                placeholder="Enrollment ID"
                 className="md:w-full w-10/12 px-4 py-2 border rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 required
               />

@@ -47,7 +47,7 @@ exports.studentSignIn = async (req, res) => {
 
     try{
         const student = await prisma.student.findUnique({
-            where : {email:email},
+            where : {enrollmentId:enrollmentId},
         })
 
         if(!student){
@@ -74,9 +74,6 @@ exports.studentSignIn = async (req, res) => {
     }
     
 }
-
-
-
 exports.studentNotice = async (req,res) => {
     res.status(200).json({message:"This is a student Notice route"})
 }

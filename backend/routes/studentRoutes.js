@@ -7,4 +7,4 @@ const router = express.Router();
 router.post('/signUp' , studentSignUp)
 router.post('/signin' , studentSignIn)
 
-module.exports = router;
+module.exports = router
