@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import logo from "../Photos/Newton x Rishihood.png";
 import hero from "../Photos/RU-Website-HomeBanner-1.png";
 
+const backend_url = "https://newton-notice-server.vercel.app"
+
 
 const Login = () => {
   const [isAdmin, setIsAdmin] = useState(false); // Toggle between Admin and Student login
@@ -26,8 +28,8 @@ const Login = () => {
     e.preventDefault();
     try {
       const url = isAdmin
-        ? 'http://localhost:3002/admin/signin'
-        : 'http://localhost:3002/student/signin';
+        ? `${backend_url}/admin/signin`
+        : `${backend_url}/student/signin`;
 
       const response = await fetch(url, {
         method: 'POST',

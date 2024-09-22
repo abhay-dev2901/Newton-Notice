@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import logo from "../Photos/Newton x Rishihood.png";
 import hero from "../Photos/RU-Website-HomeBanner-1.png";
 
-
+const backend_url = "https://newton-notice-server.vercel.app"
 
 const StudentSignup = () => {
   const [studentDetails, setStudentDetails] = useState({
@@ -31,7 +31,7 @@ const StudentSignup = () => {
     e.preventDefault();
 
     try{
-        const response = await fetch("http://localhost:3002/student/signUp",{
+        const response = await fetch(`${backend_url}/student/signUp`,{
             method: 'POST',
             headers: {
                 'Content-Type':'application/json'
