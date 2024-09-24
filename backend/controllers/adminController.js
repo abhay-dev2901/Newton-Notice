@@ -44,11 +44,12 @@ exports.adminSignUp = async (req, res) => {
 
 
 exports.adminSignIn = async (req, res) => {
-    const {adminId, password} = req.body;
+    const {AdminId, password} = req.body;
+    console.log(req.body)
 
     try{
         const Admin = await prisma.admin.findUnique({
-            where : {AdminId:adminId},
+            where : {AdminId:AdminId},
         })
 
         if(!Admin){
@@ -62,7 +63,7 @@ exports.adminSignIn = async (req, res) => {
         }
 
         const token = jwt.sign(
-            {AdminId: Admin.adminId, email: Admin.email},
+            {AdminId: Admin.AdminId, email: Admin.email},
             process.env.JWT_SECRET,
             {expiresIn: '1h'}
         )

@@ -91,7 +91,7 @@ const Notices = () => {
                             key={notice.ind} 
                             onClick={() => handleNoticeClick(notice.ind)}
                             className="p-6 bg-white shadow-md rounded-lg hover:shadow-xl transition duration-300 
-                            ease-in-out transform hover:scale-105 cursor-pointer"
+                            ease-in-out transform hover:scale-10 cursor-pointer"
                         >
                             <button 
                                 onClick={(e) => { e.stopPropagation(); handleBookmarkToggle(notice.ind); }} 

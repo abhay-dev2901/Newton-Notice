@@ -4,25 +4,52 @@ import logo from "../Photos/Newton x Rishihood.png";
 import hero from "../Photos/RU-Website-HomeBanner-1.png";
 
 const AdminSignup = () => {
+
+const backend_url = "https://newton-notice-server.vercel.app"
+const localhostUrl = "http://localhost:3003"
+
   const [adminDetails, setAdminDetails] = useState({
-    adminId: '',
+    adminId: 0,
     name: '',
     email: '',
     password: '',
   });
   const navigate = useNavigate();
+  const [message, setMessage] = useState('')
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setAdminDetails({
       ...adminDetails,
-      [name]: value,
+      [name]: name === 'adminId' ? parseInt(value) : value
     });
   };
 
-  const handleSignup = (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
-    // Handle Admin Signup Logic
+
+    try{
+        const response = await fetch(`${localhostUrl}/admin/signup` , {
+            method: 'POST',
+            headers: {
+                'Content-Type':'application/json'
+            },
+            body: JSON.stringify(adminDetails)
+        })
+
+        const data = await response.json()
+        if(response.ok){
+            setMessage("Admin created Successfully")
+            alert("Admin Signup successful")
+            navigate('/adminLogin')
+        }else{
+            setMessage(data.message || "Something went wrong")
+        }
+
+    }catch(err){
+        setMessage("Error occured while Signing up")
+    }
+
     console.log(adminDetails);
     navigate('/login');
   };
@@ -53,7 +80,7 @@ const AdminSignup = () => {
           <form className="space-y-6 animate-bounceIn" onSubmit={handleSignup}>
             <div>
               <input
-                type="text"
+                type="number"
                 name="adminId"
                 value={adminDetails.adminId}
                 onChange={handleChange}
@@ -115,6 +142,7 @@ const AdminSignup = () => {
                 Sign in
               </button>
             </p>
+            <p className='text-lg text-red'>{message}</p>
           </div>
         </div>
       </div>
@@ -123,73 +151,3 @@ const AdminSignup = () => {
 };
 
 export default AdminSignup;
-
-
-// {/* <div className="flex justify-center items-center min-h-screen bg-gray-100">
-//   <div className="w-full max-w-md mx-auto bg-white p-8 rounded-lg shadow-lg">
-//     <div className="text-center mb-6">
-//       <h1 className="text-4xl font-bold text-gray-800 mb-4 animate-slideIn">
-//         Admin Signup
-//       </h1>
-//       <p className="text-lg text-gray-600 mb-6 animate-fadeIn">
-//         Please enter your details to create an Admin account
-//       </p>
-//     </div>
-
-//     {/* Signup Form */}
-//     <form className="space-y-6 animate-bounceIn" onSubmit={handleSignup}>
-//       <div>
-//         <input
-//           type="text"
-//           name="adminId"
-//           value={adminDetails.adminId}
-//           onChange={handleChange}
-//           placeholder="Admin ID"
-//           className="w-full px-4 py-2 border rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
-//           required
-//         />
-//       </div>
-//       <div>
-//         <input
-//           type="text"
-//           name="name"
-//           value={adminDetails.name}
-//           onChange={handleChange}
-//           placeholder="Full Name"
-//           className="w-full px-4 py-2 border rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
-//           required
-//         />
-//       </div>
-//       <div>
-//         <input
-//           type="email"
-//           name="email"
-//           value={adminDetails.email}
-//           onChange={handleChange}
-//           placeholder="Email"
-//           className="w-full px-4 py-2 border rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
-//           required
-//         />
-//       </div>
-//       <div>
-//         <input
-//           type="password"
-//           name="password"
-//           value={adminDetails.password}
-//           onChange={handleChange}
-//           placeholder="Password"
-//           className="w-full px-4 py-2 border rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
-//           required
-//         />
-//       </div>
-
-//       <button
-//         type="submit"
-//         className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-full shadow-md transition duration-300 transform hover:scale-105"
-//       >
-//         Signup
-//       </button>
-//     </form>
-//   </div>
-// </div>
-//  */}

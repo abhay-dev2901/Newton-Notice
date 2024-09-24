@@ -11,6 +11,8 @@ import About from './Components/About';
 import Login from './Components/Login';
 import AdminSignup from './Components/AdminSignup';
 import StudentSignup from './Components/StudentSignup';
+import AdminLogin from './Components/AdminLogin';
+import AdminDashboard from './Components/AdminDashboard';
 
 function App() {
   return (
@@ -27,6 +29,8 @@ function App() {
         <Route path='/login' element={<Login />} />
         <Route path='/admin-signup' element={<AdminSignup />} />
         <Route path='/student-signup' element={<StudentSignup />} />
+        <Route path='/adminLogin' element={<AdminLogin />} />
+        <Route path='/adminDashboard' element={<AdminDashboard />} />
       </Routes> 
     </>
   );

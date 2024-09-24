@@ -5,6 +5,8 @@ import hero from "../Photos/RU-Website-HomeBanner-1.png";
 
 const backend_url = "https://newton-notice-server.vercel.app"
 
+
+
 const StudentSignup = () => {
   const [studentDetails, setStudentDetails] = useState({
     enrollmentId: '',
@@ -42,6 +44,7 @@ const StudentSignup = () => {
         const data = await response.json()
         if(response.ok){
             setMessage(data.message)
+            alert("Student Signup Successful")
             navigate('/login')
         }else{
             setMessage(data.message || "Something went wrong")
@@ -49,8 +52,6 @@ const StudentSignup = () => {
     }  catch(err){
         setMessage("Error occured while signing Up")
     }
-
-    console.log(studentDetails);
   };
 
   return (
@@ -141,6 +142,7 @@ const StudentSignup = () => {
                 Sign in
               </button>
             </p>
+            <p className='text-lg text-red-600'>{message}</p>
           </div>
         </div>
       </div>

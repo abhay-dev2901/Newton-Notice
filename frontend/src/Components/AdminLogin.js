@@ -3,12 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import logo from "../Photos/Newton x Rishihood.png";
 import hero from "../Photos/RU-Website-HomeBanner-1.png";
 
-const backend_url = "https://newton-notice-server.vercel.app"
+const backend_url = "http://newton-notice-server.vercel.app"
+// const localHost = "http://localhost:3003"
 
-const Login = () => {
+
+const AdminLogin = () => {
   const [message, setMessage] = useState('');
   const [loginDetails, setLoginDetails] = useState({
-    enrollmentId: '',
+    AdminId: '',
     password: '',
   });
   const navigate = useNavigate();
@@ -18,14 +20,14 @@ const Login = () => {
 
     setLoginDetails({
       ...loginDetails,
-      [name]: name === 'enrollmentId' ? parseInt(value) : value,
+      [name]: name === 'AdminId' ? parseInt(value) : value,
     });
   };
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const url = `${backend_url}/student/signin`;
+      const url = `${backend_url}/admin/signin`
 
       const response = await fetch(url, {
         method: 'POST',
@@ -39,8 +41,9 @@ const Login = () => {
 
       if (response.ok) {
         setMessage('Login Successful');
-        alert("Student Login Successful");
-        navigate('/notices');
+        alert("Admin login successful")
+        navigate('/adminDashboard')
+
       } else {
         setMessage(data.message || 'Invalid ID or password');
       }
@@ -66,10 +69,10 @@ const Login = () => {
 
         <div className="text-center">
           <h1 className="text-4xl font-bold text-gray-800 mb-4 animate-slideIn">
-            Student Login
+            Admin Login
           </h1>
           <p className="md:text-lg text-sm text-gray-600 mb-6 animate-fadeIn">
-            Please enter your Student ID and Password
+            Please enter your Admin ID and Password
           </p>
 
           {/* Login Form */}
@@ -77,10 +80,10 @@ const Login = () => {
             <div>
               <input
                 type="number"
-                name="enrollmentId"
-                value={loginDetails.enrollmentId}
+                name="AdminId"
+                value={loginDetails.AdminId}
                 onChange={handleChange}
-                placeholder="Student ID"
+                placeholder='Admin ID'
                 className="md:w-full w-10/12 px-4 py-2 border rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 required
               />
@@ -105,11 +108,12 @@ const Login = () => {
             </button>
           </form>
 
+          {/* Toggle between Admin and Student Login */}
           <div className="mt-6">
             <p className="text-lg font-light">
-              Want to login as Admin?{' '}
+                Want to login as Student?
               <button
-                onClick={() => navigate('/adminLogin')}
+                onClick={() => navigate('/login')}
                 className="text-blue-400 hover:text-blue-500 font-semibold"
               >
                 Click here
@@ -117,6 +121,7 @@ const Login = () => {
             </p>
           </div>
 
+          {/* Signup Option */}
           <div className="mt-4">
             <p className="text-lg font-light">
               Don't have an account?{' '}
@@ -136,4 +141,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default AdminLogin;
