@@ -6,7 +6,7 @@ import hero from "../Photos/RU-Website-HomeBanner-1.png";
 const AdminSignup = () => {
 
 const backend_url = "https://newton-notice-server.vercel.app"
-const localhostUrl = "http://localhost:3003"
+// const localhostUrl = "http://localhost:3003"
 
   const [adminDetails, setAdminDetails] = useState({
     adminId: 0,
@@ -29,7 +29,7 @@ const localhostUrl = "http://localhost:3003"
     e.preventDefault();
 
     try{
-        const response = await fetch(`${localhostUrl}/admin/signup` , {
+        const response = await fetch(`${backend_url}/admin/signup` , {
             method: 'POST',
             headers: {
                 'Content-Type':'application/json'
