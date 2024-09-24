@@ -66,9 +66,20 @@ const Notices = () => {
             <div className="relative md:absolute text-blue-600 cursor-pointer md:hidden z-20" onClick={handleSidebar}>
                 {showSidebar ? <FaTimes size={28} className="text-white " /> : <FaBars size={28} />}
             </div>
+
+            
             
             <div className="md:w-full p-6">
                 <div className="md:text-2xl text-l font-semibold text-blue-700 mb-1">{selectedCategory}</div>
+                <button
+                        onClick={(e) => {
+                            e.preventDefault;
+                            navigate('/')
+                        }}
+                        className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition duration-300"
+                    >
+                        Logout
+            </button>
                 <div className="mb-2 flex flex-col sm:flex-row gap-4">
                     <input
                         type="text"
