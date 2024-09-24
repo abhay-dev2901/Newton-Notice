@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import logo from "../Photos/Newton x Rishihood.png";
 import hero from "../Photos/RU-Website-HomeBanner-1.png";
 
-const backend_url = "http://newton-notice-server.vercel.app"
+const backend_url = "https://newton-notice-server.vercel.app"
 // const localHost = "http://localhost:3003"
 
 
