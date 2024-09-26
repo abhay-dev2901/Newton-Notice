@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify'; // Import toast
+import 'react-toastify/dist/ReactToastify.css'; // Import CSS for toast notifications
 import logo from "../Photos/Newton x Rishihood.png";
 import hero from "../Photos/RU-Website-HomeBanner-1.png";
 
 const backend_url = "https://newton-notice-server.vercel.app"
 
 const Login = () => {
-  const [message, setMessage] = useState('');
   const [loginDetails, setLoginDetails] = useState({
     enrollmentId: '',
     password: '',
@@ -38,20 +39,20 @@ const Login = () => {
       const data = await response.json();
 
       if (response.ok) {
-        setMessage('Login Successful');
-        alert("Student Login Successful");
+        toast.success('Login Successful'); // Show success toast
         navigate('/notices');
       } else {
-        setMessage(data.message || 'Invalid ID or password');
+        toast.error(data.message || 'Invalid ID or password'); // Show error toast
       }
     } catch (err) {
-      setMessage('Error occurred while logging in');
+      toast.error('Error occurred while logging in'); // Show error toast
       console.error(err);
     }
   };
 
   return (
     <div className="relative flex min-h-screen">
+      <ToastContainer position="top-center" autoClose={3000} hideProgressBar={true} />
       {/* Left Side: Background Image */}
       <div
         className="md:w-1/2 w-0 h-screen bg-cover bg-center relative"
@@ -128,8 +129,6 @@ const Login = () => {
               </button>
             </p>
           </div>
-
-          {message && <p className="mt-4 text-red-500">{message}</p>}
         </div>
       </div>
     </div>

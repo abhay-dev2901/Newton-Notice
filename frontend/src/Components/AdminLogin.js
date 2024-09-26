@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'; 
 import logo from "../Photos/Newton x Rishihood.png";
 import hero from "../Photos/RU-Website-HomeBanner-1.png";
 
 const backend_url = "https://newton-notice-server.vercel.app"
-// const localHost = "http://localhost:3003"
-
+const localHost = "http://localhost:3003"
 
 const AdminLogin = () => {
-  const [message, setMessage] = useState('');
   const [loginDetails, setLoginDetails] = useState({
     AdminId: '',
     password: '',
@@ -27,7 +27,7 @@ const AdminLogin = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const url = `${backend_url}/admin/signin`
+      const url = `${localHost}/admin/signin`
 
       const response = await fetch(url, {
         method: 'POST',
@@ -40,21 +40,20 @@ const AdminLogin = () => {
       const data = await response.json();
 
       if (response.ok) {
-        setMessage('Login Successful');
-        alert("Admin login successful")
-        navigate('/adminDashboard')
-
+        toast.success('Login Successful'); 
+        navigate('/adminDashboard');
       } else {
-        setMessage(data.message || 'Invalid ID or password');
+        toast.error(data.message || 'Invalid ID or password'); 
       }
     } catch (err) {
-      setMessage('Error occurred while logging in');
+      toast.error('Error occurred while logging in'); 
       console.error(err);
     }
   };
 
   return (
     <div className="relative flex min-h-screen">
+      <ToastContainer position="top-center" autoClose={3000} hideProgressBar={true} />
       {/* Left Side: Background Image */}
       <div
         className="md:w-1/2 w-0 h-screen bg-cover bg-center relative"
@@ -111,7 +110,7 @@ const AdminLogin = () => {
           {/* Toggle between Admin and Student Login */}
           <div className="mt-6">
             <p className="text-lg font-light">
-                Want to login as Student?
+              Want to login as Student?
               <button
                 onClick={() => navigate('/login')}
                 className="text-blue-400 hover:text-blue-500 font-semibold"
@@ -133,8 +132,6 @@ const AdminLogin = () => {
               </button>
             </p>
           </div>
-
-          {message && <p className="mt-4 text-red-500">{message}</p>}
         </div>
       </div>
     </div>

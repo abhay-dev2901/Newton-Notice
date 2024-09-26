@@ -12,16 +12,16 @@ const Notices = () => {
     const [showSidebar, setShowSidebar] = useState(true);
     const [bookmarkedNotices, setBookmarkedNotices] = useState([]);
     const itemsPerPage = 4;
-    useEffect(()=>{
-        if(window.innerWidth <= 701){
-                setShowSidebar(false);
-            }
-            console.log(window.innerWidth < 700);
-    },[])
+
+    useEffect(() => {
+        if (window.innerWidth <= 701) {
+            setShowSidebar(false);
+        }
+    }, []);
+
     const navigate = useNavigate();
 
     const filteredCategory = selectedCategory === 'Bookmarks' ? 'bookmarked' : selectedCategory;
-
 
     const filteredNotices = notices.filter(notice => {
         const isSearchMatch = notice.subject.toLowerCase().includes(searchTerm.toLowerCase());
@@ -34,7 +34,6 @@ const Notices = () => {
 
     const totalPages = Math.ceil(filteredNotices.length / itemsPerPage);
     const paginatedNotices = filteredNotices.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
-    // const paginatedNotices = [];
 
     const handlePageChange = (page) => {
         if (page >= 1 && page <= totalPages) {
@@ -56,7 +55,6 @@ const Notices = () => {
 
     const handleSidebar = () => {
         setShowSidebar(!showSidebar);
-
     };
 
     return (
@@ -67,19 +65,21 @@ const Notices = () => {
                 {showSidebar ? <FaTimes size={28} className="text-white " /> : <FaBars size={28} />}
             </div>
 
-            
-            
             <div className="md:w-full p-6">
-                <div className="md:text-2xl text-l font-semibold text-blue-700 mb-1">{selectedCategory}</div>
-                <button
+                {/* Flex container for title and logout button */}
+                <div className="flex justify-between items-center mb-4">
+                    <div className="md:text-2xl text-l font-semibold text-blue-700">{selectedCategory}</div>
+                    <button
                         onClick={(e) => {
-                            e.preventDefault;
-                            navigate('/')
+                            e.preventDefault();
+                            navigate('/');
                         }}
-                        className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition duration-300"
+                        className="px-4 py-2 bg-blue-500 text-black rounded-lg hover:bg-blue-600 transition duration-300"
                     >
                         Logout
-            </button>
+                    </button>
+                </div>
+
                 <div className="mb-2 flex flex-col sm:flex-row gap-4">
                     <input
                         type="text"

@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify'; // Import toast
+import 'react-toastify/dist/ReactToastify.css'; // Import CSS for toast notifications
 import logo from "../Photos/Newton x Rishihood.png";
 import hero from "../Photos/RU-Website-HomeBanner-1.png";
 
 const AdminSignup = () => {
-
-const backend_url = "https://newton-notice-server.vercel.app"
-// const localhostUrl = "http://localhost:3003"
-
+  const backend_url = "https://newton-notice-server.vercel.app";
+  const localHost = "http://localhost:3003"
   const [adminDetails, setAdminDetails] = useState({
     adminId: 0,
     name: '',
@@ -15,47 +15,46 @@ const backend_url = "https://newton-notice-server.vercel.app"
     password: '',
   });
   const navigate = useNavigate();
-  const [message, setMessage] = useState('')
+  const [message, setMessage] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setAdminDetails({
       ...adminDetails,
-      [name]: name === 'adminId' ? parseInt(value) : value
+      [name]: name === 'adminId' ? parseInt(value) : value,
     });
   };
 
   const handleSignup = async (e) => {
     e.preventDefault();
 
-    try{
-        const response = await fetch(`${backend_url}/admin/signup` , {
-            method: 'POST',
-            headers: {
-                'Content-Type':'application/json'
-            },
-            body: JSON.stringify(adminDetails)
-        })
+    try {
+      const response = await fetch(`${localHost}/admin/signup`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(adminDetails),
+      });
 
-        const data = await response.json()
-        if(response.ok){
-            setMessage("Admin created Successfully")
-            alert("Admin Signup successful")
-            navigate('/adminLogin')
-        }else{
-            setMessage(data.message || "Something went wrong")
-        }
-
-    }catch(err){
-        setMessage("Error occured while Signing up")
+      const data = await response.json();
+      if (response.ok) {
+        setMessage("Admin created Successfully");
+        toast.success("Admin Signup successful"); // Show success toast
+        navigate('/adminLogin');
+      } else {
+        setMessage(data.message || "Something went wrong");
+        toast.error(data.message || "Something went wrong"); // Show error toast
+      }
+    } catch (err) {
+      setMessage("Error occurred while Signing up");
+      toast.error("Error occurred while Signing up"); // Show error toast
     }
-
-    console.log(adminDetails);
-    navigate('/login');
   };
 
   return (
     <div className="relative flex min-h-screen">
+      <ToastContainer position="top-center" autoClose={3000} hideProgressBar={true} />
       {/* Left Side: Background Image */}
       <div
         className="md:w-1/2 w-0 h-screen bg-cover bg-center relative"

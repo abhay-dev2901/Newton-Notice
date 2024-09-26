@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify'; // Import toast
+import 'react-toastify/dist/ReactToastify.css'; // Import CSS for toast notifications
 import logo from "../Photos/Newton x Rishihood.png";
 import hero from "../Photos/RU-Website-HomeBanner-1.png";
 
 const backend_url = "https://newton-notice-server.vercel.app"
-
-
 
 const StudentSignup = () => {
   const [studentDetails, setStudentDetails] = useState({
@@ -15,47 +15,43 @@ const StudentSignup = () => {
     password: '',
   });
   const navigate = useNavigate();
-  const [message , setMessage] = useState('')
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-  
 
     setStudentDetails({
       ...studentDetails,
       [name]: name === 'enrollmentId' ? parseInt(value) : value,
     });
   };
-  
-
 
   const handleSignup = async (e) => {
     e.preventDefault();
 
-    try{
-        const response = await fetch(`${backend_url}/student/signUp`,{
-            method: 'POST',
-            headers: {
-                'Content-Type':'application/json'
-            },
-            body: JSON.stringify(studentDetails)
-        });
+    try {
+      const response = await fetch(`${backend_url}/student/signUp`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(studentDetails)
+      });
 
-        const data = await response.json()
-        if(response.ok){
-            setMessage(data.message)
-            alert("Student Signup Successful")
-            navigate('/login')
-        }else{
-            setMessage(data.message || "Something went wrong")
-        } 
-    }  catch(err){
-        setMessage("Error occured while signing Up")
+      const data = await response.json();
+      if (response.ok) {
+        toast.success(data.message); // Show success toast
+        navigate('/login');
+      } else {
+        toast.error(data.message || "Something went wrong"); // Show error toast
+      }
+    } catch (err) {
+      toast.error("Error occurred while signing up"); // Show error toast
     }
   };
 
   return (
     <div className="relative flex min-h-screen">
+      <ToastContainer position="top-center" autoClose={3000} hideProgressBar={true} />
       {/* Left Side: Background Image */}
       <div
         className="md:w-1/2 w-0 h-screen bg-cover bg-center relative"
@@ -142,7 +138,6 @@ const StudentSignup = () => {
                 Sign in
               </button>
             </p>
-            <p className='text-lg text-red-600'>{message}</p>
           </div>
         </div>
       </div>
