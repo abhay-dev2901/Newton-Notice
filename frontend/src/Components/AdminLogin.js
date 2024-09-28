@@ -6,7 +6,6 @@ import logo from "../Photos/Newton x Rishihood.png";
 import hero from "../Photos/RU-Website-HomeBanner-1.png";
 
 const backend_url = "https://newton-notice-server.vercel.app"
-// const localHost = "http://localhost:3003"
 
 const AdminLogin = () => {
   const [loginDetails, setLoginDetails] = useState({
@@ -27,7 +26,7 @@ const AdminLogin = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const url = `${backe}/admin/signin`
+      const url = `${backend_url}/admin/signin`
 
       const response = await fetch(url, {
         method: 'POST',

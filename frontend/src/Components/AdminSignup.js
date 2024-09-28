@@ -29,7 +29,7 @@ const AdminSignup = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch(`${ba}/admin/signup`, {
+      const response = await fetch(`${backend_url}/admin/signup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
